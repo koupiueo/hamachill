@@ -2,6 +2,15 @@
 
 A small, self-hosted chat app for a group of friends: text channels, threads, DMs, voice chat with screen sharing, and a lot of little extras. It runs as a single Node.js server with a SQLite database and needs **no external APIs or services**.
 
+## Screenshots
+
+![Voice chat with screen sharing](docs/screenshots/voice-screen-share.webp)
+
+<p>
+  <img src="docs/screenshots/channels-ja.webp" alt="Channel list (Japanese UI)" width="62%">
+  <img src="docs/screenshots/poll.webp" alt="A poll in a channel" width="35%">
+</p>
+
 ## Features
 
 - Text channels (`#general`, `#announcements`, `#rules`, a listen-only text channel next to voice) and forum-style **threads**
