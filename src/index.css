@@ -1,0 +1,1929 @@
+@import "tailwindcss";
+
+@theme {
+  --font-sans: "Inter Variable", "Inter", "Noto Sans JP Variable", "Noto Sans JP", "Noto Sans Japanese", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-serif: "Inter Variable", "Inter", "Noto Sans JP Variable", "Noto Sans JP", "Noto Sans Japanese", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-mono: "Inter Variable", "Inter", "Noto Sans JP Variable", "Noto Sans JP", "Noto Sans Japanese", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --default-font-family: var(--font-sans);
+  --default-mono-font-family: var(--font-sans);
+  --color-app-base: #000000;
+
+  --radius-xs: 2px;
+  --radius-sm: 3px;
+  --radius-md: 4px;
+  --radius: 4px;
+  --radius-lg: 6px;
+  --radius-xl: 8px;
+  --radius-2xl: 10px;
+  --radius-3xl: 14px;
+  --radius-4xl: 18px;
+}
+
+@variant dark (&:where([data-theme="dark"], [data-theme="dark"] *));
+
+html,
+body {
+  font-family: var(--font-sans);
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  -webkit-touch-callout: none;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior: none;
+}
+
+input,
+button,
+textarea,
+select,
+code,
+kbd,
+samp,
+pre {
+  font-family: var(--font-sans);
+}
+
+:root {
+  /* 時間 */
+  --dur-instant: 90ms;
+  /* 押下・トグル */
+  --dur-fast: 140ms;
+  /* ホバー、色、小さい出入り */
+  --dur-base: 200ms;
+  /* ポップオーバー、メニュー、トースト */
+  --dur-slow: 280ms;
+  /* モーダル、サイドバー、画面切替 */
+
+  /* イージング */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  /* 出てくる：速く出てゆっくり止まる */
+  --ease-in: cubic-bezier(0.4, 0, 1, 1);
+  /* 消える：素直に加速して去る */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+  /* 位置の移動 */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+  /* ほんの少し行き過ぎて戻る。小さい要素だけ */
+
+  /* 距離 */
+  --rise: 6px;
+  /* 出現時に下からせり上がる量 */
+  --press-scale: 0.96;
+  /* 押したときの沈み */
+}
+
+:root,
+html[data-theme="light"] {
+  --theme-text: #18181b;
+  --theme-text-muted: #52525b;
+  --theme-text-subtle: #71717a;
+  --theme-sub: #080a11;
+  --theme-accent: #080a11;
+  --theme-primary: #ffffff;
+  --theme-secondary: #ffffff;
+  --theme-input-bg: #ffffff;
+  --theme-background: #fbfbfb;
+  --theme-embed-bg: #f9fafb;
+  --theme-option-bg: #e5e7eb;
+  --theme-option-hover-bg: #d1d5db;
+
+  --bg-dm: #f3f3f4;
+  --bg-channel: #f3f3f4;
+  --bg-chat: #fbfbfb;
+  --bg-members: #f3f3f4;
+
+  --border-dm: #e3e5e8;
+  --border-channel: #e3e5e8;
+  --border-chat: #e3e5e8;
+  --border-members: #e3e5e8;
+
+  --glass-blur: none;
+}
+
+input:focus,
+textarea:focus {
+  outline: none !important;
+  box-shadow: none !important;
+}
+
+button,
+[role="button"],
+label[for],
+a {
+  cursor: pointer;
+}
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-button,
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment,
+::-webkit-scrollbar-button:horizontal,
+::-webkit-scrollbar-button:vertical,
+::-webkit-scrollbar-button:single-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+  opacity: 0 !important;
+  visibility: hidden !important;
+  -webkit-appearance: none !important;
+}
+
+::-webkit-scrollbar-corner {
+  background: transparent;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+/* Use CSS variables to bypass WebKit's notoriously buggy pseudo-element hover stickiness */
+.overflow-y-auto,
+.overflow-x-auto,
+.overflow-auto,
+.custom-scrollbar,
+.messages-container,
+textarea {
+  --thumb-bg: transparent;
+}
+
+.overflow-y-auto:hover,
+.overflow-x-auto:hover,
+.overflow-auto:hover,
+.custom-scrollbar:hover,
+.messages-container:hover,
+textarea:hover,
+.overflow-y-auto:focus-within,
+.overflow-x-auto:focus-within,
+.overflow-auto:focus-within,
+.custom-scrollbar:focus-within,
+.messages-container:focus-within,
+textarea:focus {
+  --thumb-bg: #8f9097;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: var(--thumb-bg, transparent);
+  border-radius: 4px;
+}
+
+/* Ensure dragging the scrollbar keeps it visible even if mouse leaves the container */
+::-webkit-scrollbar-thumb:active {
+  background-color: #8f9097 !important;
+}
+
+/* Firefox Support */
+@supports (-moz-appearance: none) {
+
+  .overflow-y-auto,
+  .overflow-x-auto,
+  .overflow-auto,
+  .custom-scrollbar,
+  .messages-container,
+  textarea {
+    scrollbar-width: thin;
+    scrollbar-color: var(--thumb-bg, transparent) transparent;
+  }
+}
+
+/* Motion keyframes & utilities */
+@keyframes hc-fade-in {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hc-fade-out {
+  from {
+    opacity: 1;
+  }
+
+  to {
+    opacity: 0;
+  }
+}
+
+@keyframes hc-rise-in {
+  from {
+    opacity: 0;
+    transform: translateY(var(--rise));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hc-drop-in {
+  from {
+    opacity: 0;
+    transform: translateY(calc(var(--rise) * -1));
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hc-slide-in-right {
+  from {
+    opacity: 0;
+    transform: translateX(16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hc-slide-in-left {
+  from {
+    opacity: 0;
+    transform: translateX(-16px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+@keyframes hc-scale-in {
+  from {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes hc-scale-out {
+  from {
+    opacity: 1;
+    transform: scale(1);
+  }
+
+  to {
+    opacity: 0;
+    transform: scale(0.96);
+  }
+}
+
+@keyframes hc-message-arrive {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hc-reaction-pop {
+  0% {
+    transform: scale(0.9);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+@keyframes hc-send-fly {
+  0% {
+    transform: translate(3px, -3px);
+  }
+
+  100% {
+    transform: translate(0, 0);
+  }
+}
+
+@keyframes hc-jump-bounce {
+  0% {
+    transform: translateY(-3px);
+  }
+
+  100% {
+    transform: translateY(0);
+  }
+}
+
+@keyframes hc-login-card-in {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hc-shake {
+
+  0%,
+  100% {
+    transform: translateX(0);
+  }
+
+  20%,
+  60% {
+    transform: translateX(-6px);
+  }
+
+  40%,
+  80% {
+    transform: translateX(6px);
+  }
+
+  90% {
+    transform: translateX(-3px);
+  }
+}
+
+.hc-fade-in {
+  animation: hc-fade-in var(--dur-fast) var(--ease-out) both;
+}
+
+.hc-rise-in {
+  animation: hc-rise-in var(--dur-base) var(--ease-out) both;
+}
+
+.hc-drop-in {
+  animation: hc-drop-in var(--dur-base) var(--ease-out) both;
+}
+
+.hc-scale-in {
+  animation: hc-scale-in var(--dur-base) var(--ease-out) both;
+}
+
+.hc-scale-out {
+  animation: hc-scale-out var(--dur-fast) var(--ease-in) both;
+}
+
+.hc-fade-out {
+  animation: hc-fade-out var(--dur-fast) var(--ease-in) both;
+}
+
+.hc-message-arrive {
+  animation: hc-message-arrive 180ms var(--ease-out) both;
+}
+
+.hc-reaction-pop {
+  animation: hc-reaction-pop 200ms var(--ease-spring);
+}
+
+.hc-send-fly {
+  animation: hc-send-fly 180ms var(--ease-spring);
+}
+
+.hc-jump-bounce {
+  animation: hc-jump-bounce 220ms var(--ease-spring);
+}
+
+.hc-login-card {
+  animation: hc-login-card-in 320ms var(--ease-out) both;
+}
+
+.hc-shake {
+  animation: hc-shake 300ms ease-in-out;
+}
+
+/* 自分の送信：入力欄から少し持ち上がって定位置へ（他人の新着より少しだけ大きく動く） */
+@keyframes hc-message-sent {
+  0% {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+  }
+
+  60% {
+    opacity: 1;
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+
+.hc-message-sent {
+  animation: hc-message-sent 240ms var(--ease-out) both;
+  transform-origin: bottom left;
+}
+
+/* リアクションを押した瞬間のバネ */
+@keyframes hc-reaction-bump {
+  0% {
+    transform: scale(1);
+  }
+
+  35% {
+    transform: scale(0.9);
+  }
+
+  70% {
+    transform: scale(1.12);
+  }
+
+  100% {
+    transform: scale(1);
+  }
+}
+
+.hc-reaction-bump {
+  animation: hc-reaction-bump 320ms var(--ease-out);
+}
+
+/* リアクション数の縦ロール */
+.hc-count-window {
+  display: inline-flex;
+  overflow: hidden;
+  height: 1.25em;
+  line-height: 1.25em;
+}
+
+@keyframes hc-count-roll-up {
+  from {
+    opacity: 0;
+    transform: translateY(70%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes hc-count-roll-down {
+  from {
+    opacity: 0;
+    transform: translateY(-70%);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.hc-count-roll-up {
+  display: inline-block;
+  animation: hc-count-roll-up var(--dur-base) var(--ease-out) both;
+}
+
+.hc-count-roll-down {
+  display: inline-block;
+  animation: hc-count-roll-down var(--dur-base) var(--ease-out) both;
+}
+
+/* サイドバー：VC に入ってきた人が滑り込む */
+@keyframes hc-vc-join {
+  from {
+    opacity: 0;
+    transform: translateX(-8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.hc-vc-join {
+  animation: hc-vc-join var(--dur-base) var(--ease-out) both;
+}
+
+/* サイドバーの小アイコン：喋っている間だけ緑の縁 */
+.hc-vc-mini-avatar {
+  transition: box-shadow var(--dur-fast) ease;
+}
+
+.hc-vc-mini-avatar.is-speaking {
+  box-shadow: 0 0 0 2px #23a55a;
+}
+
+/* VC 画面：喋っている間、輪の外側に静かな波紋 */
+@keyframes hc-speaking {
+  0% {
+    box-shadow: 0 0 0 3px #23a55a, 0 0 0 3px rgba(35, 165, 90, 0.35);
+  }
+
+  100% {
+    box-shadow: 0 0 0 3px #23a55a, 0 0 0 12px rgba(35, 165, 90, 0);
+  }
+}
+
+.hc-speaking {
+  animation: hc-speaking 1.4s var(--ease-out) infinite;
+}
+
+/* 既存の tailwindcss-animate 互換クラスを生かす */
+.animate-in {
+  animation: hc-fade-in var(--dur-base) var(--ease-out) both;
+}
+
+.animate-in.zoom-in-95,
+.animate-in.zoom-in {
+  animation-name: hc-scale-in;
+}
+
+.animate-in.slide-in-from-bottom-1,
+.animate-in.slide-in-from-bottom-2,
+.animate-in.slide-in-from-bottom-4 {
+  animation-name: hc-rise-in;
+}
+
+.animate-in.slide-in-from-top-2,
+.animate-in.slide-in-from-top-4 {
+  animation-name: hc-drop-in;
+}
+
+.animate-in.slide-in-from-right-4 {
+  animation-name: hc-slide-in-right;
+}
+
+.animate-in.slide-in-from-left-2,
+.animate-in.slide-in-from-left-4 {
+  animation-name: hc-slide-in-left;
+}
+
+/* 押下のフィードバック */
+.hc-press {
+  transition: transform var(--dur-instant) var(--ease-out);
+}
+
+.hc-press:active {
+  transform: scale(var(--press-scale));
+}
+
+@keyframes popIn {
+  from {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.animate-pop-in {
+  animation: popIn var(--dur-slow) var(--ease-out) both;
+}
+
+@keyframes popOut {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+
+  to {
+    transform: scale(0.96);
+    opacity: 0;
+  }
+}
+
+.animate-pop-out {
+  animation: popOut var(--dur-fast) var(--ease-in) both;
+}
+
+@keyframes sidebarSlideIn {
+  from {
+    transform: translateX(10px);
+    opacity: 0;
+  }
+
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes sidebarSlideOut {
+  from {
+    transform: translateX(0);
+    opacity: 1;
+  }
+
+  to {
+    transform: translateX(6px);
+    opacity: 0;
+  }
+}
+
+.sidebar-slide-in {
+  animation: sidebarSlideIn 140ms var(--ease-out) both;
+}
+
+.sidebar-slide-out {
+  animation: sidebarSlideOut 100ms var(--ease-in) both;
+}
+
+/* Fluid icon button interaction */
+.btn-fluid-icon {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 12px;
+  transition: transform var(--dur-instant) var(--ease-out), background-color var(--dur-fast) ease, color var(--dur-fast) ease, box-shadow var(--dur-fast) ease;
+  user-select: none;
+  cursor: pointer;
+}
+
+.btn-fluid-icon:hover {
+  transform: translateY(-1px) scale(1.04);
+}
+
+.btn-fluid-icon:active {
+  transform: translateY(0px) scale(var(--press-scale));
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  *,
+  *::before,
+  *::after {
+    animation-duration: 1ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 1ms !important;
+  }
+
+  .btn-fluid-icon,
+  .hc-press {
+    transform: none !important;
+    transition: none !important;
+  }
+
+  .hc-speaking {
+    animation: none !important;
+  }
+}
+
+/* Shift を押している間、ホバー中の行の操作ボタンを出す */
+[data-shift] .message-row:hover .chat-controls-container {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+
+/* Mobile-specific UI tweaks requested by user */
+@media (max-width: 768px) {
+
+  /* Slightly smaller overall spacing for readability on small screens */
+  .messages-container {
+    gap: 0.15rem;
+  }
+
+  .message-text,
+  .messages-container span,
+  .messages-container p {
+    font-size: 13px;
+  }
+
+  /* Narrower sidebars on mobile (already applied via classes) */
+
+  /* Chat input: make control icons consistent size and reduce padding */
+  .chat-input-mobile button {
+    padding: 6px !important;
+  }
+
+  .chat-input-mobile button svg {
+    width: 18px !important;
+    height: 18px !important;
+  }
+
+  .chat-input-mobile .w-px {
+    height: 18px;
+  }
+
+  .chat-input-mobile textarea {
+    font-size: 14px;
+  }
+
+  /* Make plus / mic / emoji / send visually same box size */
+  .chat-input-mobile .icon-box {
+    width: 36px;
+    height: 36px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 8px;
+  }
+
+  /* Channel / DM list: slightly smaller text and reduced paddings */
+  /* Escape Tailwind arbitrary value classes to satisfy CSS parser */
+  aside.w-48 .text-\[13px\],
+  nav.w-48 .text-\[13px\] {
+    font-size: 13px;
+  }
+
+  aside.w-48 .px-3,
+  nav.w-48 .px-3 {
+    padding-left: 0.6rem;
+    padding-right: 0.6rem;
+  }
+
+  canvas {
+    max-height: calc(100vh - 120px);
+  }
+}
+
+.sidebar-slide-out {
+  animation: slideOutToRight 0.2s cubic-bezier(0.55, 0, 1, 0.45) both;
+}
+
+/* Themes */
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) body {
+  background-color: var(--theme-background);
+  color: var(--theme-text);
+}
+
+html[data-theme="mint"] {
+  /* ========================================================= */
+  /* MINT THEME VARIABLES                                      */
+  /* ========================================================= */
+  --theme-text: #2c1a11;
+  --theme-text-muted: #54392a;
+  --theme-text-subtle: #755543;
+
+  --theme-text-alpha-10: rgba(44, 26, 17, 0.1);
+  --theme-text-alpha-20: rgba(44, 26, 17, 0.2);
+  --theme-text-alpha-30: rgba(44, 26, 17, 0.3);
+  --theme-text-alpha-40: rgba(44, 26, 17, 0.4);
+  --theme-text-alpha-50: rgba(44, 26, 17, 0.5);
+  --theme-text-alpha-60: rgba(44, 26, 17, 0.6);
+  --theme-text-alpha-70: rgba(44, 26, 17, 0.7);
+  --theme-text-alpha-80: rgba(44, 26, 17, 0.8);
+
+  --theme-bg-alpha-5: rgba(44, 26, 17, 0.03);
+  --theme-bg-alpha-10: rgba(44, 26, 17, 0.06);
+  --theme-bg-alpha-15: rgba(44, 26, 17, 0.10);
+  --theme-bg-alpha-20: rgba(44, 26, 17, 0.15);
+
+  --theme-background: #e8f7ee;
+  --theme-primary: #cdeada;
+  --theme-secondary: #dff5e9;
+
+  --theme-border: rgba(44, 26, 17, 0.08);
+  --theme-accent: #2e8b57;
+  --theme-input-bg: #f8fefb;
+  --theme-input-border: rgba(44, 26, 17, 0.2);
+  --theme-embed-bg: #f7fdfa;
+  --theme-option-bg: #e2e8e3;
+  --theme-option-hover-bg: #dce2dc;
+  /* ========================================================= */
+
+  --bg-dm: var(--theme-primary);
+  --bg-channel: #d6efe1;
+  --bg-chat: var(--theme-background);
+  --bg-members: var(--theme-primary);
+
+  --border-dm: var(--theme-border);
+  --border-channel: var(--theme-border);
+  --border-chat: var(--theme-border);
+  --border-members: var(--theme-border);
+}
+
+html[data-theme="citrus"] {
+  /* ========================================================= */
+  /* CITRUS SHERBET THEME VARIABLES                            */
+  /* ========================================================= */
+  --theme-text: #060607;
+  --theme-text-muted: #313338;
+  --theme-text-subtle: #4e5058;
+
+  --theme-text-alpha-10: rgba(6, 6, 7, 0.1);
+  --theme-text-alpha-20: rgba(6, 6, 7, 0.2);
+  --theme-text-alpha-30: rgba(6, 6, 7, 0.3);
+  --theme-text-alpha-40: rgba(6, 6, 7, 0.4);
+  --theme-text-alpha-50: rgba(6, 6, 7, 0.5);
+  --theme-text-alpha-60: rgba(6, 6, 7, 0.6);
+  --theme-text-alpha-70: rgba(6, 6, 7, 0.7);
+  --theme-text-alpha-80: rgba(6, 6, 7, 0.8);
+
+  --theme-bg-alpha-5: rgba(230, 126, 34, 0.02);
+  --theme-bg-alpha-10: rgba(230, 126, 34, 0.04);
+  --theme-bg-alpha-15: rgba(230, 126, 34, 0.06);
+  --theme-bg-alpha-20: rgba(230, 126, 34, 0.08);
+
+  --theme-background: #faefe4;
+  --theme-primary: #fae5d3;
+  --theme-secondary: #faebd7;
+
+  --theme-border: rgba(230, 126, 34, 0.08);
+  --theme-accent: #ff9500;
+  --theme-input-bg: #fffbf7;
+  --theme-input-border: rgba(230, 126, 34, 0.2);
+  --theme-embed-bg: #fffcf9;
+  --theme-option-bg: #f2e8de;
+  --theme-option-hover-bg: #ebdcd0;
+  /* ========================================================= */
+
+  --bg-dm: var(--theme-primary);
+  --bg-channel: #fae8d5;
+  --bg-chat: var(--theme-background);
+  --bg-members: var(--theme-secondary);
+
+  --border-dm: var(--theme-border);
+  --border-channel: var(--theme-border);
+  --border-chat: var(--theme-border);
+  --border-members: var(--theme-border);
+}
+
+html[data-theme="dark"] {
+  /* ========================================================= */
+  /* DARK THEME VARIABLES (Edit these to change the theme!)    */
+  /* ========================================================= */
+  --theme-text: #ffffff;
+  --theme-text-muted: #dbdee1;
+  --theme-text-subtle: #949ba4;
+
+  --theme-text-alpha-10: rgba(255, 255, 255, 0.1);
+  --theme-text-alpha-20: rgba(255, 255, 255, 0.2);
+  --theme-text-alpha-30: rgba(255, 255, 255, 0.3);
+  --theme-text-alpha-40: rgba(255, 255, 255, 0.4);
+  --theme-text-alpha-50: rgba(255, 255, 255, 0.5);
+  --theme-text-alpha-60: rgba(255, 255, 255, 0.6);
+  --theme-text-alpha-70: rgba(255, 255, 255, 0.7);
+  --theme-text-alpha-80: rgba(255, 255, 255, 0.8);
+
+  --theme-bg-alpha-5: rgba(255, 255, 255, 0.03);
+  --theme-bg-alpha-10: rgba(255, 255, 255, 0.05);
+  --theme-bg-alpha-15: rgba(255, 255, 255, 0.07);
+  --theme-bg-alpha-20: rgba(255, 255, 255, 0.10);
+
+  --theme-background: #1a1a1e;
+  --theme-primary: #121214;
+  --theme-secondary: #222327;
+
+  --theme-border: rgba(255, 255, 255, 0.05);
+  --theme-accent: #5865f2;
+  --theme-input-bg: #222327;
+  --theme-input-border: transparent;
+  --theme-embed-bg: var(--theme-primary);
+  --theme-option-bg: var(--theme-secondary);
+  --theme-option-hover-bg: #3f4248;
+  /* ========================================================= */
+
+  --bg-dm: #121214;
+  --bg-channel: #121214;
+  --bg-chat: #1a1a1e;
+  --bg-members: #121214;
+
+  --border-dm: var(--theme-border);
+  --border-channel: var(--theme-border);
+  --border-chat: var(--theme-border);
+  --border-members: var(--theme-border);
+}
+
+html[data-theme="forest"] {
+  /* ========================================================= */
+  /* FOREST THEME VARIABLES                                    */
+  /* ========================================================= */
+  --theme-text: #ffffff;
+  --theme-text-muted: #abb2bf;
+  --theme-text-subtle: #828a99;
+
+  --theme-text-alpha-10: rgba(255, 255, 255, 0.07);
+  --theme-text-alpha-20: rgba(255, 255, 255, 0.10);
+  --theme-text-alpha-30: rgba(255, 255, 255, 0.15);
+  --theme-text-alpha-40: rgba(255, 255, 255, 0.20);
+  --theme-text-alpha-50: rgba(255, 255, 255, 0.25);
+  --theme-text-alpha-60: rgba(255, 255, 255, 0.30);
+  --theme-text-alpha-70: rgba(255, 255, 255, 0.35);
+  --theme-text-alpha-80: rgba(255, 255, 255, 0.40);
+
+  --theme-bg-alpha-5: rgba(255, 255, 255, 0.03);
+  --theme-bg-alpha-10: rgba(255, 255, 255, 0.05);
+  --theme-bg-alpha-15: rgba(255, 255, 255, 0.07);
+  --theme-bg-alpha-20: rgba(255, 255, 255, 0.10);
+
+  --theme-background: #0e1814;
+  --theme-primary: #0a110d;
+  --theme-secondary: #12201b;
+
+  --theme-border: rgba(255, 255, 255, 0.04);
+  --theme-accent: #10b981;
+  --theme-input-bg: var(--theme-secondary);
+  --theme-input-border: transparent;
+  --theme-embed-bg: #162620;
+  --theme-option-bg: #1c3029;
+  --theme-option-hover-bg: #223c33;
+  /* ========================================================= */
+
+  --bg-dm: #060b08;
+  --bg-channel: var(--theme-primary);
+  --bg-chat: var(--theme-background);
+  --bg-members: var(--theme-secondary);
+
+  --border-dm: var(--theme-border);
+  --border-channel: var(--theme-border);
+  --border-chat: var(--theme-border);
+  --border-members: var(--theme-border);
+}
+
+html[data-theme="raincloud"] {
+  /* ========================================================= */
+  /* RAIN CLOUD THEME VARIABLES                                */
+  /* ========================================================= */
+  --theme-text: #111c24;
+  --theme-text-muted: #334155;
+  --theme-text-subtle: #475569;
+
+  --theme-text-alpha-10: rgba(17, 28, 36, 0.10);
+  --theme-text-alpha-20: rgba(17, 28, 36, 0.20);
+  --theme-text-alpha-30: rgba(17, 28, 36, 0.30);
+  --theme-text-alpha-40: rgba(17, 28, 36, 0.40);
+  --theme-text-alpha-50: rgba(17, 28, 36, 0.50);
+  --theme-text-alpha-60: rgba(17, 28, 36, 0.60);
+  --theme-text-alpha-70: rgba(17, 28, 36, 0.70);
+  --theme-text-alpha-80: rgba(17, 28, 36, 0.80);
+
+  --theme-bg-alpha-5: rgba(17, 28, 36, 0.03);
+  --theme-bg-alpha-10: rgba(17, 28, 36, 0.06);
+  --theme-bg-alpha-15: rgba(17, 28, 36, 0.10);
+  --theme-bg-alpha-20: rgba(17, 28, 36, 0.15);
+
+  --theme-background: #e8eff9;
+  --theme-primary: #cadbfa;
+  --theme-secondary: #f0f5fc;
+
+  --theme-border: rgba(17, 28, 36, 0.12);
+  --theme-accent: #5b8bf7;
+  --theme-input-bg: #ffffff;
+  --theme-input-border: rgba(91, 139, 247, 0.3);
+  --theme-embed-bg: #f1f5fd;
+  --theme-option-bg: #e2ebf8;
+  --theme-option-hover-bg: #d6e3f5;
+  /* ========================================================= */
+
+  --bg-dm: var(--theme-primary);
+  --bg-channel: #dbe6fa;
+  --bg-chat: var(--theme-background);
+  --bg-members: var(--theme-secondary);
+
+  --border-dm: var(--theme-border);
+  --border-channel: var(--theme-border);
+  --border-chat: var(--theme-border);
+  --border-members: var(--theme-border);
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-white,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-900,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-950,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .focus\:bg-white:focus {
+  background-color: var(--theme-primary) !important;
+  color: var(--theme-text-muted) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-white\/80,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-white\/90,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-white\/95,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-900\/90 {
+  background-color: var(--theme-primary) !important;
+  color: var(--theme-text-muted) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-50,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-50\/50 {
+  background-color: var(--theme-background) !important;
+  color: var(--theme-text-muted) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-100,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-200,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-300,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-400 {
+  background-color: var(--theme-secondary) !important;
+  color: var(--theme-text-muted) !important;
+  border-color: transparent !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-100\/80,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-200\/40,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-200\/50 {
+  background-color: transparent !important;
+  color: var(--theme-text-muted) !important;
+  border-color: transparent !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-950,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/90,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/80,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-black,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .placeholder\:text-black\/30::placeholder {
+  color: var(--theme-text) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-800,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-700 {
+  color: var(--theme-text-muted) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-200,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-300,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-400,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-500,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-600,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-black\/40,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-black\/50 {
+  color: var(--theme-text-subtle) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .border-zinc-950\/5,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .border-zinc-950\/10,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .border-zinc-950\/20,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .divide-zinc-950\/5> :not([hidden])~ :not([hidden]),
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .border-zinc-100,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .border-zinc-200,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .border-zinc-300 {
+  border-color: var(--theme-border) !important;
+}
+
+.chat-input-mobile {
+  background-color: var(--theme-input-bg) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .chat-input-mobile,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .profile-bar-mobile,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .chat-message-controls {
+  background-color: var(--theme-input-bg) !important;
+  border-color: var(--theme-input-border) !important;
+}
+
+.popup-bg {
+  background-color: #ffffff !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="forest"]) .popup-bg {
+  background-color: var(--theme-primary) !important;
+}
+
+.poll-widget,
+.media-embed {
+  background-color: var(--theme-embed-bg) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .poll-widget,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .media-embed {
+  background-color: var(--theme-embed-bg) !important;
+  border-color: var(--theme-input-border) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .hover\:bg-black\/5:hover,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .hover\:bg-zinc-950\/5:hover,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .hover\:bg-zinc-50:hover,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .hover\:bg-zinc-100:hover,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .hover\:bg-zinc-200:hover {
+  background-color: var(--theme-secondary) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-950\/5 {
+  background-color: var(--theme-bg-alpha-5) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-950\/10,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-900\/5,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-900\/10 {
+  background-color: var(--theme-bg-alpha-10) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-950\/15 {
+  background-color: var(--theme-bg-alpha-15) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .bg-zinc-950\/20 {
+  background-color: var(--theme-bg-alpha-20) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/10 {
+  color: var(--theme-text-alpha-10) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/20 {
+  color: var(--theme-text-alpha-20) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/30 {
+  color: var(--theme-text-alpha-30) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/40 {
+  color: var(--theme-text-alpha-40) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/50 {
+  color: var(--theme-text-alpha-50) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/60 {
+  color: var(--theme-text-alpha-60) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/70 {
+  color: var(--theme-text-alpha-70) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/80 {
+  color: var(--theme-text-alpha-80) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .hover\:text-zinc-900\/80:hover {
+  color: var(--theme-text-alpha-80) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .hover\:text-zinc-900:hover {
+  color: var(--theme-text) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .chat-input-mobile .text-zinc-500,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .chat-input-mobile .text-zinc-900\/10 {
+  color: var(--theme-text-alpha-10) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/20 {
+  color: var(--theme-text-alpha-20) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .text-zinc-900\/30 {
+  color: #b5bac1 !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .chat-input-mobile .hover\:text-zinc-800:hover,
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .chat-input-mobile .hover\:text-zinc-900:hover {
+  color: var(--theme-text-muted) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .border-l-red-500 {
+  border-left-color: #ef4444 !important;
+}
+
+/* Hide light-mode specific koi bg and blue gradient in user control bar for non-light themes */
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="forest"], html[data-theme="citrus"], html[data-theme="raincloud"]) .profile-bar-mobile .theme-gradient-bg {
+  display: none !important;
+}
+
+
+
+
+/* Message row hover effect: instant transition without animation */
+.message-row {
+  transition: none !important;
+}
+
+/* ライト系テーマ: ほんの少し暗く */
+.message-row:hover {
+  background-color: rgba(0, 0, 0, 0.035);
+}
+
+/* ダーク系テーマ: 逆にほんの少し明るく (白を乗せる) */
+:is(html[data-theme="dark"], html[data-theme="forest"]) .message-row:hover {
+  background-color: rgba(255, 255, 255, 0.07);
+}
+
+/* Dynamically adjust avatar status border colors on hover */
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .group:hover .border-\[var\(--bg-members\)\] {
+  border-color: var(--theme-secondary) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .group:hover .border-\[var\(--bg-dm\)\] {
+  border-color: var(--theme-secondary) !important;
+}
+
+/* Poll Option Card styles with dynamic theme-aware backgrounds */
+.poll-option {
+  background-color: var(--theme-option-bg) !important;
+}
+
+.poll-option:hover {
+  background-color: var(--theme-option-hover-bg) !important;
+}
+
+/* Mention highlight & badge styles */
+.mention-highlight {
+  position: relative;
+  background-color: rgba(249, 115, 22, 0.05) !important;
+  box-shadow: inset 0 0 12px rgba(249, 115, 22, 0.04) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .mention-highlight {
+  background-color: rgba(249, 115, 22, 0.08) !important;
+  box-shadow: inset 0 0 16px rgba(249, 115, 22, 0.06) !important;
+}
+
+.mention-badge-me {
+  color: #ea580c !important;
+  /* Orange 600 */
+  background-color: rgba(249, 115, 22, 0.12) !important;
+}
+
+.mention-badge-me:hover {
+  background-color: rgba(249, 115, 22, 0.22) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .mention-badge-me {
+  color: #f97316 !important;
+  /* Orange 500 */
+  background-color: rgba(249, 115, 22, 0.18) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .mention-badge-me:hover {
+  background-color: rgba(249, 115, 22, 0.28) !important;
+}
+
+
+
+/* Discord-style clean interactive icon buttons */
+.btn-fluid-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  position: relative;
+  transition: background-color 0.15s ease,
+    color 0.15s ease,
+    transform 0.12s cubic-bezier(0.2, 0, 0, 1),
+    opacity 0.15s ease;
+}
+
+.btn-fluid-icon:active {
+  transform: scale(0.94);
+}
+
+/* Typing indicator bouncy dots */
+@keyframes typingBounce {
+
+  0%,
+  80%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+
+  40% {
+    transform: translateY(-3.5px);
+    opacity: 1;
+  }
+}
+
+.typing-dot {
+  display: inline-block;
+  border-radius: 9999px;
+  animation: typingBounce 1.3s infinite ease-in-out both;
+}
+
+.typing-dot:nth-child(1) {
+  animation-delay: 0s;
+}
+
+.typing-dot:nth-child(2) {
+  animation-delay: 0.18s;
+}
+
+.typing-dot:nth-child(3) {
+  animation-delay: 0.36s;
+}
+
+/* Ultra-stylish Chat Input Dock */
+.chat-input-dock {
+  transition: border-color 0.2s cubic-bezier(0.16, 1, 0.3, 1),
+    box-shadow 0.25s cubic-bezier(0.16, 1, 0.3, 1),
+    background-color 0.2s ease,
+    transform 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Chat Input Dock Styles */
+.chat-input-dock {
+  background-color: var(--theme-input-bg, #ffffff);
+  border: 1px solid rgba(0, 0, 0, 0.14);
+  box-shadow: none !important;
+  transition: border-color 0.2s ease, box-shadow 0.2s ease, border-radius 0.2s ease;
+}
+
+:is(html[data-theme="light"], :root:not([data-theme])) .chat-input-dock {
+  background-color: #ffffff;
+  border-color: rgba(0, 0, 0, 0.14);
+}
+
+:is(html[data-theme="dark"]) .chat-input-dock {
+  background-color: #1e1f20;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+:is(html[data-theme="forest"]) .chat-input-dock {
+  background-color: #14221a;
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.chat-input-dock:focus-within {
+  border-color: rgba(0, 0, 0, 0.2) !important;
+  box-shadow: 0 1px 6px rgba(0, 0, 0, 0.04) !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="forest"]) .chat-input-dock:focus-within {
+  border-color: rgba(255, 255, 255, 0.22) !important;
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.3) !important;
+}
+
+.chat-input-textarea {
+  color: #18181b !important;
+  caret-color: #18181b !important;
+  user-select: text !important;
+  -webkit-user-select: text !important;
+  font-family: inherit;
+}
+
+:is(html[data-theme="dark"], html[data-theme="forest"]) .chat-input-textarea {
+  color: #f3f4f6 !important;
+  caret-color: #f3f4f6 !important;
+}
+
+:is(html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="raincloud"]) .chat-input-textarea {
+  color: var(--theme-text) !important;
+}
+
+.chat-input-textarea::placeholder {
+  color: #9ca3af !important;
+  opacity: 1 !important;
+}
+
+:is(html[data-theme="dark"], html[data-theme="forest"]) .chat-input-textarea::placeholder {
+  color: #80868b !important;
+  opacity: 1 !important;
+}
+
+/* Custom scrollbar for multi-line chat textarea (hidden unless hovered & overflowing) */
+.chat-input-textarea {
+  --chat-thumb: transparent;
+  scrollbar-width: thin;
+}
+
+@supports (-moz-appearance: none) {
+  .chat-input-textarea {
+    scrollbar-color: transparent transparent;
+  }
+
+  .chat-input-textarea:hover {
+    scrollbar-color: #8f9097 transparent;
+  }
+}
+
+.chat-input-textarea:hover {
+  --chat-thumb: #8f9097;
+}
+
+.chat-input-textarea::-webkit-scrollbar {
+  width: 4px;
+}
+
+.chat-input-textarea::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.chat-input-textarea::-webkit-scrollbar-thumb {
+  background: var(--chat-thumb);
+  border-radius: 4px;
+}
+
+.chat-input-textarea::-webkit-scrollbar-button {
+  display: none !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Prevent accidental text selection on mobile when long-pressing chat messages */
+@media (hover: none) and (pointer: coarse) {
+  .message-row {
+    -webkit-touch-callout: none !important;
+    -webkit-user-select: none !important;
+    user-select: none !important;
+  }
+
+  .message-row textarea,
+  .message-row input {
+    -webkit-user-select: text !important;
+    user-select: text !important;
+  }
+}
+
+/* Collapsible section animation */
+.collapsible-grid {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows 180ms var(--ease-out), opacity var(--dur-fast) ease;
+}
+
+.collapsible-grid.expanded {
+  grid-template-rows: 1fr;
+  opacity: 1;
+}
+
+.collapsible-grid-inner {
+  overflow: hidden;
+}
+
+/* Animated Shrug & Tableflip Special Kaomoji Animations */
+@keyframes shrug-eye {
+
+  0%,
+  75%,
+  100% {
+    transform: translateX(0) scaleY(1);
+  }
+
+  20% {
+    transform: translateX(-2.5px) scaleY(1);
+  }
+
+  45% {
+    transform: translateX(2.5px) scaleY(1);
+  }
+
+  80% {
+    transform: translateX(0) scaleY(0.12);
+    /* cute blink */
+  }
+
+  86% {
+    transform: translateX(0) scaleY(1);
+  }
+}
+
+@keyframes shrug-arm-left {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-2px) rotate(-5deg);
+  }
+}
+
+@keyframes shrug-arm-right {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-2px) rotate(5deg);
+  }
+}
+
+@keyframes rage-eyes {
+
+  0%,
+  100% {
+    transform: translate(0, 0);
+  }
+
+  20% {
+    transform: translate(-1px, 0.5px);
+  }
+
+  40% {
+    transform: translate(1px, -0.5px);
+  }
+
+  60% {
+    transform: translate(-0.5px, -1px);
+  }
+
+  80% {
+    transform: translate(0.5px, 1px);
+  }
+}
+
+@keyframes table-float {
+
+  0%,
+  100% {
+    transform: translateY(0) rotate(0deg);
+  }
+
+  50% {
+    transform: translateY(-3px) rotate(6deg);
+  }
+}
+
+.animate-shrug-eye {
+  display: inline-block;
+  animation: shrug-eye 3.2s infinite ease-in-out;
+}
+
+.animate-shrug-arm-left {
+  display: inline-block;
+  animation: shrug-arm-left 2s infinite ease-in-out;
+}
+
+.animate-shrug-arm-right {
+  display: inline-block;
+  animation: shrug-arm-right 2s infinite ease-in-out;
+}
+
+.animate-rage-eyes {
+  display: inline-block;
+  animation: rage-eyes 0.25s infinite ease-in-out;
+}
+
+.animate-table-float {
+  display: inline-block;
+  animation: table-float 1.6s infinite ease-in-out;
+}
+
+@keyframes magic-wand {
+
+  0%,
+  100% {
+    transform: rotate(0deg) translateY(0);
+  }
+
+  25% {
+    transform: rotate(-10deg) translateY(-2px);
+  }
+
+  75% {
+    transform: rotate(10deg) translateY(-1px);
+  }
+}
+
+.animate-magic-wand {
+  display: inline-block;
+  animation: magic-wand 2.5s infinite ease-in-out;
+}
+
+@keyframes party-jump {
+
+  0%,
+  100% {
+    transform: translateY(0) scaleY(1);
+  }
+
+  45% {
+    transform: translateY(0) scaleY(0.9);
+  }
+
+  50% {
+    transform: translateY(-6px) scaleY(1.05);
+  }
+
+  55% {
+    transform: translateY(0) scaleY(0.95);
+  }
+}
+
+.animate-party-jump {
+  display: inline-block;
+  animation: party-jump 1.5s infinite ease-in-out;
+}
+
+@keyframes thinking-wobble {
+
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+
+  25% {
+    transform: rotate(-4deg);
+  }
+
+  75% {
+    transform: rotate(4deg);
+  }
+}
+
+.animate-thinking-wobble {
+  display: inline-block;
+  animation: thinking-wobble 4s infinite ease-in-out;
+}
+
+@keyframes dance-left-arm {
+
+  0%,
+  100% {
+    transform: rotate(-20deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(40deg) translateY(-4px);
+  }
+}
+
+@keyframes dance-right-arm {
+
+  0%,
+  100% {
+    transform: rotate(20deg) translateY(0);
+  }
+
+  50% {
+    transform: rotate(-40deg) translateY(-4px);
+  }
+}
+
+@keyframes dance-body {
+
+  0%,
+  100% {
+    transform: translateX(0) scaleY(1);
+  }
+
+  25% {
+    transform: translateX(-4px) scaleY(0.95);
+  }
+
+  50% {
+    transform: translateX(0) scaleY(1.05);
+  }
+
+  75% {
+    transform: translateX(4px) scaleY(0.95);
+  }
+}
+
+.animate-dance-l {
+  animation: dance-left-arm 0.6s infinite ease-in-out;
+  transform-origin: right bottom;
+  display: inline-block;
+}
+
+.animate-dance-r {
+  animation: dance-right-arm 0.6s infinite ease-in-out;
+  transform-origin: left bottom;
+  display: inline-block;
+}
+
+.animate-dance-body {
+  animation: dance-body 0.6s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes sleep-z {
+  0% {
+    opacity: 0;
+    transform: translate(0, 0) scale(0.5);
+  }
+
+  50% {
+    opacity: 1;
+    transform: translate(4px, -8px) scale(1.2);
+  }
+
+  100% {
+    opacity: 0;
+    transform: translate(8px, -16px) scale(0.8);
+  }
+}
+
+.animate-sleep-z1 {
+  animation: sleep-z 2s infinite ease-in-out;
+  display: inline-block;
+  opacity: 0;
+}
+
+.animate-sleep-z2 {
+  animation: sleep-z 2s infinite ease-in-out 0.6s;
+  display: inline-block;
+  opacity: 0;
+}
+
+.animate-sleep-z3 {
+  animation: sleep-z 2s infinite ease-in-out 1.2s;
+  display: inline-block;
+  opacity: 0;
+}
+
+@keyframes love-heart {
+
+  0%,
+  100% {
+    transform: scale(1);
+    opacity: 1;
+    color: #ef4444;
+  }
+
+  50% {
+    transform: scale(1.4);
+    opacity: 0.8;
+    color: #f43f5e;
+  }
+}
+
+.animate-love-heart {
+  animation: love-heart 1s infinite ease-in-out;
+  display: inline-block;
+}
+
+@keyframes cry-tear {
+  0% {
+    transform: translateY(0) scale(1);
+    opacity: 1;
+  }
+
+  100% {
+    transform: translateY(12px) scale(0.5);
+    opacity: 0;
+  }
+}
+
+@keyframes cry-body {
+
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+
+  50% {
+    transform: translateY(2px);
+  }
+}
+
+.animate-cry-tear {
+  animation: cry-tear 0.8s infinite ease-in;
+  display: inline-block;
+  color: #3b82f6;
+}
+
+.animate-cry-tear-delay {
+  animation: cry-tear 0.8s infinite ease-in 0.4s;
+  display: inline-block;
+  color: #3b82f6;
+}
+
+.animate-cry-body {
+  animation: cry-body 0.4s infinite ease-in-out;
+  display: inline-block;
+}
+
+/* ========================================================= */
+/* Channel Active Sliding Indicator (Snappy Overshoot Spring) */
+/* ========================================================= */
+.channel-active-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  pointer-events: none;
+  border-radius: 0.375rem;
+  /* rounded-md */
+  z-index: 0;
+  will-change: transform, width, height;
+}
+
+.channel-indicator-pill {
+  width: 100%;
+  height: 100%;
+  border-radius: inherit;
+  background-color: rgba(9, 9, 11, 0.1);
+  transform-origin: center center;
+  will-change: transform;
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .channel-indicator-pill {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* 子要素がない場合のフォールバック */
+.channel-active-indicator:not(:has(.channel-indicator-pill)) {
+  background-color: rgba(9, 9, 11, 0.1);
+}
+
+:is(html[data-theme="dark"], html[data-theme="mint"], html[data-theme="citrus"], html[data-theme="forest"], html[data-theme="raincloud"]) .channel-active-indicator:not(:has(.channel-indicator-pill)) {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+
+/* スピードが出ている中盤で縦に伸び（Stretch）、着地でほんの少し縮んで戻る（Squash） */
+@keyframes channel-indicator-stretch {
+  0% {
+    transform: scale(1, 1);
+  }
+
+  38% {
+    transform: scale(calc(1 - (var(--stretch-scale, 1.28) - 1) * 0), var(--stretch-scale, 1.28));
+  }
+
+  75% {
+    transform: scale(calc(1 + (var(--stretch-scale, 1.28) - 1) * 0), calc(1 - (var(--stretch-scale, 1.28) - 1) * 0.18));
+  }
+
+  100% {
+    transform: scale(1, 1);
+  }
+}
+
+.channel-indicator-pill.is-stretching {
+  animation: channel-indicator-stretch 360ms cubic-bezier(0.2, 0.8, 0.25, 1);
+}
+
+/* Natural, snappy spring with subtle overshoot (~4-5%) and smooth settle */
+.channel-indicator-spring {
+  transition: transform 360ms cubic-bezier(0.22, 1.2, 0.36, 1),
+    width 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    height 260ms cubic-bezier(0.16, 1, 0.3, 1),
+    opacity 120ms ease;
+}
+
+.channel-indicator-instant {
+  transition: opacity 120ms ease;
+}
+
+.channel-indicator-layout {
+  transition: transform 140ms ease,
+    width 140ms ease,
+    height 140ms ease,
+    opacity 120ms ease;
+}
+
+
+/* ＋メニュー：左下（＋ボタン側）から小さく出て、項目が少しずつ遅れて入る */
+.hc-plus-menu {
+  transform-origin: bottom left;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.04), 0 8px 24px -6px rgba(0, 0, 0, 0.14);
+  animation: hc-plus-in 200ms var(--ease-out) both;
+}
+
+.hc-plus-menu.is-exit {
+  animation: hc-plus-out 120ms ease-in both;
+  pointer-events: none;
+}
+
+.hc-plus-menu .hc-plus-item {
+  animation: hc-plus-item-in 220ms var(--ease-out) both;
+  animation-delay: calc(var(--i) * 24ms + 30ms);
+}
+
+.hc-plus-menu.is-exit .hc-plus-item {
+  animation: none;
+}
+
+@keyframes hc-plus-in {
+  from {
+    opacity: 0;
+    transform: translateY(6px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+@keyframes hc-plus-out {
+  from {
+    opacity: 1;
+    transform: none;
+  }
+
+  to {
+    opacity: 0;
+    transform: translateY(4px) scale(0.98);
+  }
+}
+
+@keyframes hc-plus-item-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
+
+.dark .hc-plus-menu {
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3), 0 10px 28px -6px rgba(0, 0, 0, 0.5);
+}
+
+@media (prefers-reduced-motion: reduce) {
+
+  .hc-plus-menu,
+  .hc-plus-menu .hc-plus-item {
+    animation: none !important;
+  }
+}
+

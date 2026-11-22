@@ -1,0 +1,14 @@
+{
+  "ignore": [
+    "*.db",
+    "*.db-*",
+    "*.sqlite",
+    "*.db-journal",
+    "node_modules/**",
+    "uploads/**",
+    "tmp/**",
+    "soundboards/**",
+    "stumps/**"
+  ],
+  "ext": "js,json"
+}

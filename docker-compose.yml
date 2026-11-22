@@ -1,0 +1,17 @@
+services:
+  hamachill:
+    build: .
+    image: hamachill:latest
+    container_name: hamachill
+    restart: unless-stopped
+    env_file: .env
+    environment:
+      DATA_DIR: /data
+    ports:
+      - "3000:3000"
+    volumes:
+      # SQLite DB, uploads, soundboards, stamps / DB・アップロード・サウンドボード・スタンプ
+      - hamachill-data:/data
+
+volumes:
+  hamachill-data:

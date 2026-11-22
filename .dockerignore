@@ -1,0 +1,15 @@
+.git
+.env
+.env.*
+!.env.example
+**/node_modules
+dist
+data
+public/twemoji
+server/uploads
+server/tmp
+server/soundboards/*
+!server/soundboards/.gitkeep
+**/*.db
+**/*.db-*
+**/*.log
