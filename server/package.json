@@ -1,6 +1,6 @@
 {
-  "name": "hc-server",
-  "version": "1.0.0",
+  "name": "hamachill-server",
+  "version": "0.1.0",
   "description": "hamachill server",
   "main": "index.js",
   "scripts": {
